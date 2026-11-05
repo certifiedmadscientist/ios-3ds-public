@@ -1,0 +1,45 @@
+/* Devices this replay never touches: inert stubs. */
+long aes_init() { return 0; }
+long aes_read() { return 0; }
+long aes_write() { return 0; }
+long chipid_init() { return 0; }
+long chipid_read() { return 0; }
+long chipid_write() { return 0; }
+long clcd_read() { return 0; }
+long clcd_write() { return 0; }
+long clock_init() { return 0; }
+long clock_read() { return 0; }
+long clock_write() { return 0; }
+long console_print() { return 0; }
+long console_print_hex() { return 0; }
+long gpio_init() { return 0; }
+long gpio_read() { return 0; }
+long gpio_write() { return 0; }
+long i2c_init() { return 0; }
+long i2c_read() { return 0; }
+long i2c_write() { return 0; }
+long nand_adm_read() { return 0; }
+long nand_adm_write() { return 0; }
+long nand_ecc_read() { return 0; }
+long nand_ecc_write() { return 0; }
+long nand_fifo_read_dma() { return 0; }
+long nand_fifo_write() { return 0; }
+long nand_fmc_read() { return 0; }
+long nand_fmc_write() { return 0; }
+long nand_init() { return 0; }
+long nand_note_dma() { return 0; }
+long sha1_init() { return 0; }
+long sha1_read() { return 0; }
+long sha1_write() { return 0; }
+long timer_init() { return 0; }
+long timer_read() { return 0; }
+long timer_write() { return 0; }
+long uart_init() { return 0; }
+long uart_read() { return 0; }
+long uart_write() { return 0; }
+long vic_init() { return 0; }
+long vic_read() { return 0; }
+long vic_write() { return 0; }
+u32 htl_ctx_mode, htl_ctx_pc, htl_ctx_va;
+bool iowin_on;
+long pmu_button_event() { return 0; }

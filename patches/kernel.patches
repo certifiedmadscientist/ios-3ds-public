@@ -1,0 +1,94 @@
+# Kernel patch list for the iPod touch 1G (n45ap) iPhone OS 1.1.5 (4B1)
+# kernelcache, applied by tools/patch_kernel.py to the decrypted and
+# decompressed Mach-O.
+#
+# Format: "@ <file offset>" starts a hunk; "-" lines are the original bytes,
+# "+" lines the replacement (hex, concatenated).  "- zeros N" means N zero
+# bytes.  Every original byte is checked before anything is written.
+# '#' starts a comment.  File offset -> VA: __TEXT is VA 0xC0008000 at file
+# offset 0, __DATA is VA 0xC01A5000 at 0x19D000, __PRELINK is VA 0xC029B000
+# at 0x1F4000.
+#
+# md5 of the unpatched Mach-O and of the result, checked by patch_kernel.py:
+input-md5  2f5a6ab6c77daf3a4400f384c0b86aaf
+output-md5 50bed0aaf1baf0ea266b852a447df6ac
+
+# _ml_get_timebase fallback (VA 0xC006156C).  When no platform timebase
+# hook is registered, the stock code spins reading timer registers.  Read the
+# ARM11 MPCore cycle counter instead (ARMv6 encoding; the 3DS has no ARMv7
+# c9 PMU):  mrc p15,0,r0,c15,c12,1 ; mov r1,#0 ; bx lr ; nop ; nop
+@ 0x5956c
+- 602093e55c0093e5601093e5020051e1faffff1a
++ 3c0f1fee0010a0e31eff2fe10000a0e10000a0e1
+
+# IOPanicPlatform::start (VA 0xC014C500, Thumb): return true at once
+# (movs r0,#1 ; bx lr) so the panic platform does not stop IOKit matching.
+@ 0x144500
+- 80b500af
++ 01207047
+
+# _PE_init_iokit+0x44 (VA 0xC0160358, Thumb): drop the boot-logo wait
+# loop (bls -14 -> nop).
+@ 0x158358
+- f9d9eb61
++ c046eb61
+
+# Code cave at VA 0xC0184F38 (unused zero-filled space in __TEXT):
+# handlers for BSD syscalls 366 (framebuffer blit via copyin) and 367
+# (framebuffer geometry via copyout).  Wired into sysent below.
+@ 0x17cf38
+- zeros 256
++ f0412de90d70a0e10280a0e1004091e5045091e5086091e5c4309fe5030055e1
++ 140000cabc309fe5000093e5000050e30500001ab0009fe50116a0e3ac309fe5
++ 33ff2fe19c309fe5000083e5000056e30030a00398309f15030080e00520a0e1
++ 0010a0e10400a0e188309fe533ff2fe1000088e5f081bde81600a0e3000088e5
++ 1600a0e3f081bde80000000010402de9004091e518d04de2193ea0e300308de5
++ f030a0e304308de5053da0e308308de5f030a0e30c308de50330a0e310308de5
++ 0130a0e314308de50d00a0e10410a0e11820a0e320309fe533ff2fe118d08de2
++ 1080bde800650400c04f18c000003018df0d06c000ca3800481306c0bc1306c0
+
+# Code cave at VA 0xC01A4D8C (unused zero-filled space in __TEXT): the
+# Mach trap -10 framebuffer handler assembled from patches/fb_trap2.S (its
+# first 400 bytes; the trailing data word is zero).  The bootloader
+# repoints trap -10 to its own handler at run time and checks for this
+# address first (boot/main.c).
+@ 0x19cd8c
+- zeros 400
++ f04f2de900b0a0e1060d8fe200a090e500005ae31000001a301f12ee3f1cc1e3
++ ff10c1e354219fe5021081e050219fe5023081e04c419fe5004083e548019fe5
++ 370f08ee0010a0e39a1f07ee951f07ee34a19fe54d0f8fe200a080e500409be5
++ 04509be508609be50c709be510809be514909be5000054e31a00000a010054e3
++ 0700000a020054e30200000a0000e0e300008be5f08fbde8190ea0e300008be5
++ f08fbde8190e55e30b00002af00056e30900002aef0066e2f010a0e3950120e0
++ 801080e001108ae00070c1e52704a0e10100c1e52708a0e10200c1e50000a0e3
++ 00008be5f08fbde8080086e0190e50e3198ea08306804880090087e0f00050e3
++ f090a08307904980ff4005e22504a0e1ff3000e22508a0e1ff2000e2088086e0
++ 099087e004602de50650a0e1080055e10e0000aa0760a0e1090056e1090000aa
++ ef0066e2f010a0e3950120e0801080e001108ae00040c1e50130c1e50220c1e5
++ 016086e2f3ffffea015085e2eeffffea04609de40000a0e300008be5f08fbde8
++ 0000009f842f0000021c3018000010be
+
+# mach_trap_table[10] (VA 0xC01A5710): 5 arguments, handler 0xC01A4D8C.
+@ 0x19d710
+- 00000000d55302c0
++ 050000008c4d1ac0
+
+# sysent[366] (VA 0xC01BA048): 3 arguments, handler 0xC0184F38.
+@ 0x1b2048
+- 00000000835e10c0
++ 03000000384f18c0
+
+# sysent[367] (VA 0xC01BA05C): 1 argument, handler 0xC0184FC4.
+@ 0x1b205c
+- 00000000835e10c0
++ 01000000c44f18c0
+
+# Prelinked kext code (VA 0xC0491434): blxeq r3 -> nop.
+@ 0x3ea434
+- 33ff2f01
++ 0000a0e1
+
+# Prelinked kext code (VA 0xC0491488): blxeq r3 -> nop.
+@ 0x3ea488
+- 33ff2f01
++ 0000a0e1

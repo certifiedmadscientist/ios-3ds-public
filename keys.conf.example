@@ -1,0 +1,11 @@
+# Copy to keys.conf (ignored by git) and fill in both keys, or pass them to
+# build.sh with --key837 / --rootfs-key.  Neither key ships with this
+# repository; see README.md ("Keys") for where they are documented.
+
+# S5L8900 "Key 0x837": 32 hex digits.  Decrypts the 8900/IMG2-wrapped
+# kernelcache and DeviceTree; the payload's emulated AES engine also uses it.
+KEY837=
+
+# VFDecrypt key for the root filesystem DMG (018-3755-1.dmg in the 4B1
+# IPSW): 72 hex digits.
+ROOTFS_KEY=

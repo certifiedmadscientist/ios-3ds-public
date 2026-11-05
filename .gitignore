@@ -1,0 +1,14 @@
+# Build outputs (all Apple-derived data lands here; never commit it)
+/out/
+/work/
+keys.conf
+*.o
+*.d
+*.elf
+*.bin
+*.firm
+__pycache__/
+boot/ksyms.S
+boot/n45ap.devicetree
+boot/key837.inc
+boot/key837.inc.tmp
