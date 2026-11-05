@@ -214,3 +214,12 @@ tools/                IPSW/kernel/rootfs tools, FIRM packer, harnesses
 Several peripheral models in `boot/periph/` follow, or are ported from,
 devos50's qemu-ios (the iPod touch 1G emulator for QEMU) and its NAND
 generator. The FIRM uses the public "sighax" boot9 signature.
+
+## AI assistance
+
+This project was developed with AI assistance. AI coding tools helped write
+and debug the code, patches, tools and documentation in this repository.
+
+## Disclaimer
+
+This software is provided as-is with NO WARRANTY. I am not responsible for bricked SD cards, nuclear warfare, broken 3DS consoles, lost data, your alarm not firing, etc
