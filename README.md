@@ -215,6 +215,11 @@ Several peripheral models in `boot/periph/` follow, or are ported from,
 devos50's qemu-ios (the iPod touch 1G emulator for QEMU) and its NAND
 generator. The FIRM uses the public "sighax" boot9 signature.
 
+## License
+
+GPL-2.0. See [LICENSE](LICENSE). Apple firmware is not included and remains
+Apple's; you supply your own IPSW.
+
 ## AI assistance
 
 This project was developed with AI assistance. AI coding tools helped write
